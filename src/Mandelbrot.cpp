@@ -20,17 +20,27 @@ void Mandelbrot::gen_fractal()
         double z_i=0;
         double z_temp;
         int n=0;
-        while(pow(z_r,2)+pow(z_i,2)<4&&n<1000)
+        while(pow(z_r,2)-pow(z_i,2)<4&&n<1000)
         {
             z_temp=pow(z_r,2)-pow(z_i,2)+c_r;
             z_i=z_r*z_i*2+c_i;
             z_r=z_temp;
             n++;
         }
+        if(n==1000)
+        {
+            m_bitmap[x*m_height*4+y*4+0]=0;
+            m_bitmap[x*m_height*4+y*4+1]=0;
+            m_bitmap[x*m_height*4+y*4+1]=0;
+            m_bitmap[x*m_height*4+y*4+3]=255;
+        }
+        else
+        {
         m_bitmap[x*m_height*4+y*4+0]=pow((n/1000),.6)*255;
         m_bitmap[x*m_height*4+y*4+1]=pow((n/1000),.5)*255;
         m_bitmap[x*m_height*4+y*4+1]=pow((n/1000),.4)*255;
         m_bitmap[x*m_height*4+y*4+3]=255;
+        }
         
     }
     
