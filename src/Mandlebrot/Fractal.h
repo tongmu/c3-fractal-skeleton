@@ -5,7 +5,7 @@
 #include<cstdlib>
 #include<vector>
 #include<iostream>
-#include<omp.h>
+//#include<omp.h>
 #include "lodepng.h"
 using namespace std;	
 

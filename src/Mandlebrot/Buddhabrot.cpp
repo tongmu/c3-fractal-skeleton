@@ -35,10 +35,28 @@ void Buddhabrot::gen_fractal()
                 z_i=z_r*z_i*2+c_i;
                 z_r=z_temp;
                 n++;
+                int x2=((z_r+2.25)/3)*width;
+                int y2=((z_i+1.5)/3)*width;
+                int npixels2=y2*height+x2;
+                temp.push_back(npixels2);
+                
             }
-        
+        if(n!=1000)
+        {
+            for(int q=0; q<temp.size(); q++)
+                bucket[temp[q]]+=1;
         }
     }
+    for(int w=0; w<bucket.size(); w++)
+    {
+        int x=w%height;
+        int y=w/height;
+        m_bitmap[x*m_height*4+y*4+0]=pow((bucket[w]/1000),.6)*255;
+        m_bitmap[x*m_height*4+y*4+1]=pow((bucket[w]/1000),.5)*255;
+        m_bitmap[x*m_height*4+y*4+1]=pow((bucket[w]/1000),.4)*255;
+        m_bitmap[x*m_height*4+y*4+3]=255;
+    }
+    
     
     // Initialize a bucket array (one integer for each pixel) (this is the outer bucket array)
     
