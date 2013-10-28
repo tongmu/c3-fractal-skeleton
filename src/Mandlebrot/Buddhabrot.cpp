@@ -51,9 +51,9 @@ void Buddhabrot::gen_fractal()
     {
         int x=w%height;
         int y=w/height;
-        m_bitmap[x*m_height*4+y*4+0]=pow((bucket[w]/1000),.6)*255;
-        m_bitmap[x*m_height*4+y*4+1]=pow((bucket[w]/1000),.5)*255;
-        m_bitmap[x*m_height*4+y*4+1]=pow((bucket[w]/1000),.4)*255;
+        m_bitmap[x*m_height*4+y*4+0]=pow((((double)bucket[w])/1000),.6)*255;
+        m_bitmap[x*m_height*4+y*4+1]=pow((((double)bucket[w])/1000),.5)*255;
+        m_bitmap[x*m_height*4+y*4+1]=pow((((double)bucket[w])/1000),.4)*255;
         m_bitmap[x*m_height*4+y*4+3]=255;
     }
     
