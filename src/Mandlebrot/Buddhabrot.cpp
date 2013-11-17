@@ -2,8 +2,6 @@
 #include <vector>
 using namespace std;
 
-
-
 void Buddhabrot::gen_fractal()
 {
 
@@ -14,40 +12,70 @@ void Buddhabrot::gen_fractal()
     int width=get_width();
     const int npixels=height*width;
     vector<int> bucket (npixels);
-    
     int n=0;
-    while (n<10000)
+    int max=0;
+    
+    while (n<900000)
     {
-            int i=rand()%npixels;
-            bucket[i]+=1;
-            int x=i%height;
-            int y=i/height;
-            double c_r=(((double)x/width)*3.0-2.25);
-            double c_i=(((double)y)/height*3.0-1.5);
-            double z_r=0;
-            double z_i=0;
-            double z_temp;
-            int n=0;
-            vector<int>temp;
-            while(pow(z_r,2)+pow(z_i,2)<4&&n<1000)
-            {
-                z_temp=pow(z_r,2)-pow(z_i,2)+c_r;
-                z_i=z_r*z_i*2+c_i;
-                z_r=z_temp;
-                n++;
-                int x2=((z_r+2.25)/3)*width;
-                int y2=((z_i+1.5)/3)*width;
-                int npixels2=y2*height+x2;
-                temp.push_back(npixels2);
-                
-            }
-        if(n!=1000)
+        int i=rand()%npixels;
+        //bucket[i]+=1;
+        int x=i%height;
+        int y=i/height;
+        double c_r=(((double)x/width)*3.0-2.25);
+        double c_i=(((double)y)/height*3.0-1.5);
+        double z_r=0;
+        double z_i=0;
+        double z_temp;
+        int c=0;
+        vector<int>temp;
+        bool b=true;
+        while(pow(z_r,2)+pow(z_i,2)<4&&c<1000)
         {
-            for(int q=0; q<temp.size(); q++)
-                bucket[temp[q]]+=1;
+            z_temp=pow(z_r,2)-pow(z_i,2)+c_r;
+            z_i=z_r*z_i*2+c_i;
+            //cout<<"z_i: "<<z_i<<endl;
+            z_r=z_temp;
+            //cout<<"z_r: "<<z_r<<endl;
+            c++;
+            int x2=((z_r+2.25)/3)*width;
+            //cout<<"x2: "<<x2<<endl;
+            int y2=((z_i+1.5)/3)*height;
+            //cout<<"y2: "<<y2<<endl;
+            int npixels2=y2*width+x2;
+            if(npixels2>=90000||npixels2<0)
+            {
+                b=false;
+                break;
+            }
+            temp.push_back(npixels2);
+            
+        }
+        if(b)
+        {
+            n++;
+            if(c!=1000)
+            {
+                for(int q=0; q<temp.size(); q++)
+                {
+                    max++;
+                    bucket[temp[q]]+=1;
+                }
+            }
         }
     }
-    for(int w=0; w<bucket.size(); w++)
+    int len = bucket.size();
+//    int max_index = 0;
+    for (int i=0; i<len; i++)
+//    {
+        cout << i << ": " << bucket[i] << endl;
+//        if (bucket[i] > bucket[max_index])
+//        {
+//            max_index = i;
+//        }
+//    }
+//    int max = bucket[max_index];
+    cout<<"max: "<<max<<endl;
+    for(int w=0; w<len; w++)
     {
         int x=w%height;
         int y=w/height;
